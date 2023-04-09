@@ -13,26 +13,40 @@ what is a callback function?
 
 syntax is also qutie different than java
 */
-const dateTime   = (date = new Date()) => date
-.toLocaleString("en-us", {
-    day: "2-digit",
-    hour12: true,
-    month: long,
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-}).split(","); // .split makes an array with each element being those that are between commas
 
-const render = target => {
-    const [weekday, dayAndMonth, year, time] = dateTime();
-}
+const today = new Date();
+const currentTime = document.getElementById("TimeHere");
+const dateContainer = document.createElement("div");
+dateContainer.style.display = "flex";
+dateContainer.style.alignItems = "center";
+
+const year = document.createElement("p");
+const month = document.createElement("p");
+const day = document.createElement("p");
+const hours = document.createElement("p");
+const minutes = document.createElement("p");
+
+year.textContent = today.getFullYear();
+month.textContent = today.getMonth() + 1;
+day.textContent = today.getDay();
+hours.textContent = today.getHours();
+minutes.textContent = String(today.getMinutes()).padStart(2, '0');
+
+year.style.fontSize = "50px";
+month.style.fontSize = "40px";
+day.style.fontSize = "30px";
+hours.style.fontSize = "25px";
+minutes.style.fontSize = "15px";
+
+dateContainer.style.fontFamily = "verdana";
+dateContainer.append(year, month, day, hours, minutes);
+currentTime.appendChild(dateContainer);
 
 fetch("https://api.open-meteo.com/v1/forecast?latitude=43.904&longitude=-78.977&current_weather=true&hourly=temperature_2m")
 .then (res => res.json()) 
 .then(data => {
-    let currentTime = data.current_weather.time; // currentTime and currentTemp only visible in the scope within the .then statement
-    let currentTemp = data.current_weather.temperature; // for JSON objects I can use .s to navigate the path?
-    document.getElementById("TimeHere").innerHTML = "<h4>" + currentTime + "</h4>"; 
-    document.getElementById("TempHere").innerHTML = "<h4>" + currentTemp + "</h4>";})
+    const currentTemp = data.current_weather.temperature; // for JSON objects I can use . to navigate the path?
+    document.getElementById("TempHere").innerHTML = "<h4>" + currentTemp + "°C" + "</h4>";
+})
     // saying that the element with id "TimeHere" or "TempHere" will be replaced with currentTime or currentTemp
     // can also specify the size and type of text
