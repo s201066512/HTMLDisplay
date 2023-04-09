@@ -1,0 +1,38 @@
+
+
+<!-- this is a lot more basic than I originally thought
+especially compared to how complicated it would be in java
+to do:
+make it look better
+make time an actual time also make it update in real time
+try adding a graphic based on the temperature --> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>Weather and Time</h1>
+</head>
+<body>
+<h2>The time is</h2>
+    <div id = "TimeHere" style = "background-color: antiquewhite; padding: 15px; border-color: bisque;">
+</div>
+<h3>The temperature is</h3>
+    <div id = "TempHere" style = "background-color: antiquewhite; padding: 15px; border-color: bisque;">
+</div>
+
+</body>
+<script>
+fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true&hourly=temperature_2m")
+.then (res => res.json()) 
+.then(data => {
+    let currentTime = data.current_weather.time; // currentTime and currentTemp only visible in the scope within the .then statement
+    let currentTemp = data.current_weather.temperature; // for JSON objects I can use .s to navigate the path?
+    document.getElementById("TimeHere").innerHTML = "<h4>" + currentTime + "</h4>"; 
+    document.getElementById("TempHere").innerHTML = "<h4>" + currentTemp + "</h4>";})
+ 
+</script>
+</html>
